@@ -6,7 +6,4 @@ const nextConfig = {
 
 module.exports = {
 	nextConfig,
-	env: {
-		STRAPI_URL: 'my-value',
-	},
 };
