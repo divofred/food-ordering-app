@@ -43,23 +43,28 @@ function CheckoutForm() {
 		const token = await stripe.createToken(cardElement);
 		const userToken = Cookies.get('token');
 		try {
-			const response = await fetch(`http://127.0.0.1:1337/api/orders`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${userToken}`,
-				},
-				body: JSON.stringify({
-					amount: Number(
-						Math.round(appContext.cart.total + 'e2') + 'e-2'
-					),
-					dishes: appContext.cart.items,
-					address: data.address,
-					city: data.city,
-					state: data.state,
-					token: token.token.id,
-				}),
-			});
+			const response = await fetch(
+				`${
+					process.env.STRAPI_URL || 'http://127.0.0.1:1337'
+				}/api/orders`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${userToken}`,
+					},
+					body: JSON.stringify({
+						amount: Number(
+							Math.round(appContext.cart.total + 'e2') + 'e-2'
+						),
+						dishes: appContext.cart.items,
+						address: data.address,
+						city: data.city,
+						state: data.state,
+						token: token.token.id,
+					}),
+				}
+			);
 			if (response.status === 200) {
 				alert('Transaction Successful, continue your shopping');
 				router.push('/');

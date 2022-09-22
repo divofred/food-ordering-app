@@ -31,11 +31,16 @@ class MyApp extends App {
 		}
 		if (token) {
 			// authenticate the token on the server and place set user object
-			fetch('http://localhost:1337/api/users/me', {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}).then(async res => {
+			fetch(
+				`${
+					process.env.STRAPI_URL || `http://localhost:1337`
+				}/api/users/me`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			).then(async res => {
 				// if res comes back not valid, token is not valid
 				// delete the token and log the user out on client
 				if (!res.ok) {
