@@ -5,7 +5,6 @@ const nextConfig = {
 };
 
 module.exports = {
-	nextConfig,
 	env: {
 		STRAPI_URL: process.env.STRAPI_URL,
 	},
